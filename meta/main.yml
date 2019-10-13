@@ -37,8 +37,8 @@ galaxy_info:
         - buster
     - name: Ubuntu
       versions:
-        - 18.04
-    - name: CentOS
+        - bionic 
+    - name: EL
       versions:
         - 7
     - name: Raspbian
