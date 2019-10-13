@@ -1,0 +1,33 @@
+---
+dependency:
+  name: galaxy
+driver:
+  name: docker
+lint:
+  name: yamllint
+platforms:
+  - name: molecule-k3s-master
+    image: jrei/systemd-centos:latest
+    privileged: True
+    volumes:
+      - /sys/fs/cgroup:/sys/fs/cgroup:ro
+    command: "/usr/sbin/init"
+    groups:
+      - k3s_server
+      - k3s
+  - name: molecule-k3s-agent
+    image: jrei/systemd-centos:latest
+    privileged: True
+    volumes:
+      - /sys/fs/cgroup:/sys/fs/cgroup:ro
+    command: "/usr/sbin/init"
+    groups:
+      - k3s
+provisioner:
+  name: ansible
+  lint:
+    name: ansible-lint
+verifier:
+  name: testinfra
+  lint:
+    name: flake8

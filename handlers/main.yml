@@ -1,0 +1,10 @@
+---
+- name: daemon-reload
+  systemd:
+    daemon_reload: yes
+
+- name: start-service
+  systemd:
+    enabled: yes
+    name: k3s.service
+    state: started

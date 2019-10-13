@@ -1,0 +1,9 @@
+---
+
+- name: "Mapping host architecture {{ host_architecture.stdout }} to k3s architecture"
+  set_fact:
+    k3s_architecture: "{{ k3s_binary_architecture_dictionary[ansible_architecture] }}"
+
+- name: "Mapping k3s architecture '{{ k3s_architecture }}' to SHA256 filename"
+  set_fact:
+    k3s_sha256_filename: "{{ k3s_hashfile_dictionary[k3s_architecture] }}"

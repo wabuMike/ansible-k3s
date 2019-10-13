@@ -1,0 +1,34 @@
+---
+- name: Set server hostname as fact
+  set_fact:
+    k3s_server_hostname: "{{ groups['k3s_server'][0] }}"
+
+- name: Set server address as fact
+  set_fact:
+    k3s_server_address: "{{ hostvars[k3s_server_hostname].ansible_default_ipv4.address }}"
+
+- name: Check if node-token file exists on server
+  stat:
+    path: /var/lib/rancher/k3s/server/node-token
+  register: k3s_server_node_token
+  run_once: true
+  delegate_to: "{{ k3s_server_hostname }}"
+
+- name: Start k3s server to get node token
+  command: k3s server
+  async: 45
+  run_once: true
+  delegate_to: "{{ k3s_server_hostname }}"
+  when: not k3s_server_node_token.stat.exists
+  ignore_errors: true
+
+- name: Read node-token from server
+  slurp:
+    src: /var/lib/rancher/k3s/server/node-token
+  register: token
+  run_once: true
+  delegate_to: "{{ k3s_server_hostname }}"
+
+- name: Set node-token as fact
+  set_fact:
+    k3s_node_token: "{{ token['content'] | b64decode }}"

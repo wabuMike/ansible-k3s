@@ -1,0 +1,7 @@
+---
+- import_tasks: "{{ role_path }}/tasks/get_architecture.yml"
+- import_tasks: "{{ role_path }}/tasks/get_version.yml"
+- import_tasks: "{{ role_path }}/tasks/setup_paths.yml"
+- import_tasks: "{{ role_path }}/tasks/install.yml"
+- import_tasks: "{{ role_path }}/tasks/get_server.yml"
+- import_tasks: "{{ role_path }}/tasks/install_service.yml"

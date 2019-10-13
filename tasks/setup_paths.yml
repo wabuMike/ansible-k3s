@@ -1,0 +1,7 @@
+---
+
+- name: "Create installation directory '{{ k3s_install_path }}/{{ k3s_version }}'"
+  file:
+    state: directory
+    path: "{{ k3s_install_path }}/{{ k3s_version }}"
+    mode: "0755"

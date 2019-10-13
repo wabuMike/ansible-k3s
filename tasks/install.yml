@@ -1,0 +1,42 @@
+---
+- name: "Check if k3s is already installed in version {{ k3s_version }}"
+  stat:
+    path: "{{ k3s_install_path }}/{{ k3s_version }}/k3s"
+  register: k3s_already_installed
+
+- name: "Download SHA256 checksum of binary {{ k3s_architecture }}"
+  get_url:
+    url: "https://github.com/rancher/k3s/releases/download/{{ k3s_version }}/{{ k3s_sha256_filename }}"
+    dest: "{{ k3s_install_path }}/{{ k3s_version }}/{{ k3s_sha256_filename }}"
+    sha256sum:
+    owner: root
+    group: root
+    mode: "0600"
+  when: not k3s_already_installed.stat.exists
+
+- name: "Get SHA256 checksum"
+  shell: "set -o pipefail && grep -e '{{ k3s_architecture }}$' {{ k3s_install_path }}/{{ k3s_version }}/{{ k3s_sha256_filename }} | grep -oe '^[a-zA-Z0-9]* ' | tr -d '[:space:]'" # noqa 204
+  args:
+    executable: /bin/bash
+  register: sha256_checksum_output
+  when: not k3s_already_installed.stat.exists
+
+- name: "Download k3s in version {{ k3s_version }} for architecture {{ k3s_architecture }} from Github"
+  get_url:
+    url: "https://github.com/rancher/k3s/releases/download/{{ k3s_version }}/{{ k3s_architecture }}"
+    dest: "{{ k3s_install_path }}/{{ k3s_version }}/k3s"
+    checksum: "sha256:{{ sha256_checksum_output.stdout }}"
+    owner: root
+    group: root
+    mode: "0755"
+  when: not k3s_already_installed.stat.exists
+
+- name: "Create links from /usr/local/bin to install dir"
+  file:
+    src: "{{ k3s_install_path }}/{{ k3s_version }}/k3s"
+    dest: "/usr/local/bin/{{ item }}"
+    state: link
+  loop:
+    - k3s
+    - kubectl
+    - crictl

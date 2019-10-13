@@ -1,0 +1,14 @@
+k3s_binary_architecture_dictionary:
+  amd64: k3s
+  x86_64: k3s
+  arm64: k3s-arm64
+  aarch64: k3s-arm64
+  arm: k3s-armhf
+  arm7: k3s-armhf
+  armv7l: k3s-armhf
+  armhf: k3s-armhf
+
+k3s_hashfile_dictionary:
+  k3s: sha256sum-amd64.txt
+  k3s-arm64: sha256sum-arm64.txt
+  k3s-armhf: sha256sum-arm.txt
