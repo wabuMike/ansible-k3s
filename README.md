@@ -1,6 +1,6 @@
 # Setup k3s
 
-The script downloads, installs and starts [k3s](https://k3s.io/), a lightweight Kubernetes  distribution.
+This ansible role downloads, installs and starts [k3s](https://k3s.io/), a lightweight Kubernetes  distribution.
 
 ## What's special about this role
 There are a few other k3s Ansible roles available on Ansible Galaxy. These points make this script special:
