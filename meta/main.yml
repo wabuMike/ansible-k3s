@@ -41,9 +41,6 @@ galaxy_info:
     - name: EL
       versions:
         - 7
-    - name: Raspbian
-      versions:
-        - buster
 
   galaxy_tags:
     - k3s
