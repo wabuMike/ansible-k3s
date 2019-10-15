@@ -1,4 +1,5 @@
 # Setup k3s
+[![Build Status](https://travis-ci.org/wabuMike/k3s.svg?branch=master)](https://travis-ci.org/wabuMike/k3s)
 
 This ansible role downloads, installs and starts [k3s](https://k3s.io/), a lightweight Kubernetes  distribution.
 
