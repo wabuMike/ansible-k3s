@@ -7,4 +7,4 @@
   systemd:
     enabled: yes
     name: k3s.service
-    state: started
+    state: restarted
