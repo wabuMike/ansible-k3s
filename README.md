@@ -12,7 +12,9 @@ There are a few other k3s Ansible roles available on Ansible Galaxy. These point
 
 - fully tested with Molecule
 
-## Variables
+## Prerequisites
+
+### Variables
 
 You might want to override the following variables (i.e. in group_vars or host_vars):
 
@@ -21,7 +23,7 @@ You might want to override the following variables (i.e. in group_vars or host_v
 - k3s_agent_options:
 - k3s_version:
 
-## Server group
+### Server group
 
 Make sure to declare the host, which should act as server, in the following group: `[k3s_server]`.
 
@@ -52,3 +54,9 @@ Playbook:
 
 - Run `molecule test --all`
   - Scenarios exist for Debian (default), Ubuntu and CentOS
+
+### Debugging tests
+
+1. Run `molecule test --destroy=never` to run the default scenario.
+2. Then login to the machine with `molecule login -h <molecule-k3s-agent|molecule-k3s-master>`.
+3. Destroy the machines afterwards with `molecule destroy`.
