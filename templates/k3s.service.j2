@@ -5,7 +5,11 @@ Documentation=https://k3s.io
 After=network.target
 
 [Service]
+{% if 'k3s_server' in group_names %}
 Type=notify
+{% else %}
+Type=exec
+{% endif %}
 EnvironmentFile=-/etc/systemd/system/k3s.service.env
 {% if 'k3s_server' in group_names %}
 ExecStart=/usr/local/bin/k3s server {{ k3s_server_options }}
