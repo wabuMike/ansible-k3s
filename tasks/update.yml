@@ -5,13 +5,9 @@
     update_cache: yes
     state: latest
   when: ansible_os_family == 'RedHat'
-  notify: 
-    - reboot
 
 - name: "Update and upgrade for Debian based distributions"
   apt:
     update_cache: yes
     upgrade: safe
   when: ansible_os_family == 'Debian'
-  notify: 
-    - reboot

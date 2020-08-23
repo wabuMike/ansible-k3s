@@ -8,3 +8,7 @@
     enabled: yes
     name: k3s.service
     state: restarted
+
+- name: reboot
+  reboot:
+    reboot_timeout: 3600

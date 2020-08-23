@@ -5,7 +5,7 @@ driver:
   name: docker
 platforms:
   - name: molecule-k3s-master
-    image: jrei/systemd-ubuntu:latest
+    image: jrei/systemd-debian:latest
     privileged: True
     volumes:
       - /sys/fs/cgroup:/sys/fs/cgroup:ro
@@ -14,7 +14,7 @@ platforms:
       - k3s_server
       - k3s
   - name: molecule-k3s-agent
-    image: jrei/systemd-ubuntu:latest
+    image: jrei/systemd-debian:latest
     privileged: True
     volumes:
       - /sys/fs/cgroup:/sys/fs/cgroup:ro
@@ -24,4 +24,4 @@ platforms:
 provisioner:
   name: ansible
 verifier:
-  name: ansible
+  name: testinfra

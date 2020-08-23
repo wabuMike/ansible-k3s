@@ -13,3 +13,8 @@ def test_hosts_file(host):
     assert f.exists
     assert f.user == 'root'
     assert f.group == 'root'
+
+def test_iptables_running_and_enabled(host):
+    iptables = host.service("iptables")
+    assert iptables.is_running
+    assert iptables.is_enabled

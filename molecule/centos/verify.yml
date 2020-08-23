@@ -1,0 +1,14 @@
+---
+# This is an example playbook to execute Ansible tests.
+
+- name: Verify
+  hosts: all
+  tasks:
+  - name: Check if agent is available
+    command: "kubectl get node molecule-k3s-agent"
+    when: "'molecule-k3s-master' in inventory_hostname"
+    register: agent_availability_check
+  - name: Assert that agent is available
+    assert:
+      that: not agent_availability_check.failed
+    when: "'molecule-k3s-master' in inventory_hostname"
