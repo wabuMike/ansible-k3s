@@ -1,4 +1,13 @@
 ---
+- name: "Install SELinux policy (CentOS only)"
+  dnf:
+    name: 
+      - container-selinux
+      - selinux-policy-base
+      - https://rpm.rancher.io/k3s-selinux-0.1.1-rc1.el7.noarch.rpm
+    state: present
+  when: ansible_distribution == 'CentOS'
+
 - name: "Check if k3s is already installed in version {{ k3s_version }}"
   stat:
     path: "{{ k3s_install_path }}/{{ k3s_version }}/k3s"
