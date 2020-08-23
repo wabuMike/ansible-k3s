@@ -1,0 +1,25 @@
+---
+- name: Disable nftables (if installed)
+  service:
+    name: nftables
+    state: stopped
+    enabled: no
+  ignore_errors: yes
+
+- name: Install iptables
+  package: 
+    name: iptables
+    state: present
+
+- name: Install ip6tables
+  package: 
+    name: ip6tables
+    state: present
+  
+- name: Enable ip6tables service
+  service:
+    name: ip6tables
+    state: started
+    enabled: yes
+  tags:
+    - molecule-idempotence-notest
