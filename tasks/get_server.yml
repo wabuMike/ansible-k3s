@@ -16,7 +16,7 @@
 
 - name: Start k3s server to get node token
   command: k3s server
-  async: 45
+  async: 80
   run_once: true
   delegate_to: "{{ k3s_server_hostname }}"
   when: not k3s_server_node_token.stat.exists
