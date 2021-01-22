@@ -14,13 +14,36 @@
   run_once: true
   delegate_to: "{{ k3s_server_hostname }}"
 
-- name: Start k3s server to get node token
-  command: k3s server
-  async: 80
-  run_once: true
-  delegate_to: "{{ k3s_server_hostname }}"
-  when: not k3s_server_node_token.stat.exists
-  ignore_errors: true
+- name: Install service for server only
+  template:
+    src: "k3s.service.j2"
+    dest: /etc/systemd/system/k3s.service
+    owner: root
+    group: root
+    mode: 0644
+  register: k3s_systemd_server_service_file
+  when: inventory_hostname in groups['k3s_server']
+
+- name: Start service on server only
+  systemd:
+    state: started
+    name: k3s.service
+    daemon_reload: yes    
+  when: (inventory_hostname in groups['k3s_server']) and k3s_systemd_server_service_file.changed
+
+- name: Wait until the file /var/lib/rancher/k3s/server/token is present before continuing
+  wait_for:
+    path: /var/lib/rancher/k3s/server/token
+    timeout: 300
+  when: (inventory_hostname in groups['k3s_server']) and k3s_systemd_server_service_file.changed
+
+#- name: Start k3s server to get node token
+#  command: k3s server
+#  async: 300
+#  run_once: true
+#  delegate_to: "{{ k3s_server_hostname }}"
+#  when: not k3s_server_node_token.stat.exists
+#  ignore_errors: true
 
 - name: Read node-token from server
   slurp:
