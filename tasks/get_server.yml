@@ -24,7 +24,7 @@
 
 - name: Read node-token from server
   slurp:
-    src: /var/lib/rancher/k3s/server/node-token
+    src: /var/lib/rancher/k3s/server/token
   register: token
   run_once: true
   delegate_to: "{{ k3s_server_hostname }}"
