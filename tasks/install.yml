@@ -17,7 +17,6 @@
   get_url:
     url: "https://github.com/rancher/k3s/releases/download/{{ k3s_version }}/{{ k3s_sha256_filename }}"
     dest: "{{ k3s_install_path }}/{{ k3s_version }}/{{ k3s_sha256_filename }}"
-    sha256sum:
     owner: root
     group: root
     mode: "0600"
